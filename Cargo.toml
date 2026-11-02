@@ -82,9 +82,10 @@ tikv-jemallocator = { version = "0.7.0", default-features = false, features = [
 # Keep the Chrome 150–153 profiles and their required TLS support in sync.
 [patch.crates-io]
 wreq-util = { git = "https://github.com/0x676e67/wreq-util", rev = "e3922a2b2d976487cb4cf4e7b0ac290b3ce77f66" }
-wreq = { git = "https://github.com/0x676e67/wreq", rev = "cd76bcdf1307153de289d34e072528bdf0510a3b" }
-btls = { git = "https://github.com/0x676e67/btls", rev = "129887582a538b8f4dcf371d15c953335312ca37" }
-btls-sys = { git = "https://github.com/0x676e67/btls", rev = "129887582a538b8f4dcf371d15c953335312ca37" }
+# The fork: `Client::preconnect` (7bbc8910) is not in a released wreq yet.
+wreq = { git = "https://github.com/gyozaaaa/wreq", rev = "7bbc89101cbcf350f1626899cd521d1c42a21202" }
+btls = { git = "https://github.com/0x676e67/btls", rev = "0f5416d1f61eb4f64a9f2f4d8b867495305d61c1" }
+btls-sys = { git = "https://github.com/0x676e67/btls", rev = "0f5416d1f61eb4f64a9f2f4d8b867495305d61c1" }
 
 [profile.release]
 codegen-units = 1

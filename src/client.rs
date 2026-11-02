@@ -20,7 +20,7 @@ use wreq::tls::trust::CertStore;
 
 use self::{
     nogil::NoGIL,
-    req::{execute_request, execute_websocket_request},
+    req::{execute_preconnect, execute_request, execute_websocket_request},
     resp::{BlockingResponse, BlockingWebSocket, Response, WebSocket},
 };
 use crate::{
@@ -518,6 +518,27 @@ impl Client {
         .await
     }
 
+    /// Open a connection to the origin of `url`, and leave it idle in the pool.
+    ///
+    /// The connection is made the way a request to `url` would make it: through
+    /// the same proxies, with the same TLS and HTTP/2 settings. Each call opens
+    /// a new connection, whether or not one is already idle, so it is worth it
+    /// only where the request that will use it cannot be made yet.
+    #[inline]
+    #[pyo3(signature = (url))]
+    pub async fn preconnect(
+        &self,
+        #[pyo3(cancel_handle)] cancel: CancelHandle,
+        url: PyBackedStr,
+    ) -> PyResult<()> {
+        NoGIL::new_with_token(
+            execute_preconnect(self.clone(), url),
+            cancel,
+            self.cancel.clone(),
+        )
+        .await
+    }
+
     /// Make a WebSocket request to the given URL.
     #[inline]
     #[pyo3(signature = (url, **kwds))]
@@ -721,6 +742,21 @@ impl BlockingClient {
             pyo3_async_runtimes::tokio::get_runtime()
                 .block_on(execute_request(self.0.clone(), method, url, kwds))
                 .map(Into::into)
+        })
+    }
+
+    /// Open a connection to the origin of `url`, and leave it idle in the pool.
+    ///
+    /// The connection is made the way a request to `url` would make it: through
+    /// the same proxies, with the same TLS and HTTP/2 settings. Each call opens
+    /// a new connection, whether or not one is already idle, so it is worth it
+    /// only where the request that will use it cannot be made yet.
+    #[inline]
+    #[pyo3(signature = (url))]
+    pub fn preconnect(&self, py: Python, url: PyBackedStr) -> PyResult<()> {
+        py.detach(|| {
+            pyo3_async_runtimes::tokio::get_runtime()
+                .block_on(execute_preconnect(self.0.clone(), url))
         })
     }
 

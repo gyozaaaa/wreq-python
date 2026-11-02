@@ -145,7 +145,7 @@ dependencies = [
 [[package]]
 name = "btls"
 version = "0.5.6"
-source = "git+https://github.com/0x676e67/btls?rev=129887582a538b8f4dcf371d15c953335312ca37#129887582a538b8f4dcf371d15c953335312ca37"
+source = "git+https://github.com/0x676e67/btls?rev=0f5416d1f61eb4f64a9f2f4d8b867495305d61c1#0f5416d1f61eb4f64a9f2f4d8b867495305d61c1"
 dependencies = [
  "bitflags",
  "btls-sys",
@@ -157,7 +157,7 @@ dependencies = [
 [[package]]
 name = "btls-sys"
 version = "0.5.6"
-source = "git+https://github.com/0x676e67/btls?rev=129887582a538b8f4dcf371d15c953335312ca37#129887582a538b8f4dcf371d15c953335312ca37"
+source = "git+https://github.com/0x676e67/btls?rev=0f5416d1f61eb4f64a9f2f4d8b867495305d61c1#0f5416d1f61eb4f64a9f2f4d8b867495305d61c1"
 dependencies = [
  "bindgen",
  "cmake",
@@ -2168,7 +2168,7 @@ checksum = "1ebf944e87a7c253233ad6766e082e3cd714b5d03812acc24c318f549614536e"
 [[package]]
 name = "wreq"
 version = "0.16.1"
-source = "git+https://github.com/0x676e67/wreq?rev=cd76bcdf1307153de289d34e072528bdf0510a3b#cd76bcdf1307153de289d34e072528bdf0510a3b"
+source = "git+https://github.com/gyozaaaa/wreq?rev=7bbc89101cbcf350f1626899cd521d1c42a21202#7bbc89101cbcf350f1626899cd521d1c42a21202"
 dependencies = [
  "btls",
  "btls-sys",

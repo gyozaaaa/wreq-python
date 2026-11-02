@@ -1238,6 +1238,31 @@ class Client:
         """
         ...
 
+    async def preconnect(self, url: str) -> None:
+        r"""
+        Open a connection to the origin of `url`, and leave it idle in the pool.
+
+        The connection is made the way a request to `url` would make it: through
+        the same proxies, with the same TLS and HTTP/2 settings. Each call opens
+        a new connection, whether or not one is already idle, so it is worth it
+        only where the request that will use it cannot be made yet.
+
+        # Examples
+
+        ```python
+        import asyncio
+        import wreq
+
+        async def main():
+            client = wreq.Client()
+            await client.preconnect("https://httpbin.io/anything")
+            response = await client.get("https://httpbin.io/get")
+
+        asyncio.run(main())
+        ```
+        """
+        ...
+
     async def websocket(
         self,
         url: str,

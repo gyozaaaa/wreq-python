@@ -428,6 +428,21 @@ where
         .map_err(Into::into)
 }
 
+/// Open a connection to the origin of `url` and leave it idle in the pool.
+pub async fn execute_preconnect<U>(client: Client, url: U) -> PyResult<()>
+where
+    U: AsRef<str>,
+{
+    client
+        .inner
+        .load()
+        .client
+        .preconnect(url.as_ref())
+        .await
+        .map_err(Error::Library)
+        .map_err(Into::into)
+}
+
 pub async fn execute_websocket_request<U>(
     client: Client,
     url: U,
